@@ -10,22 +10,54 @@
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filter/bzip2.hpp>
 #include <sstream>
+#include <time.h>
+using namespace std;
+using namespace boost::iostreams;
+
+
+string getFileExt( string fname, filtering_streambuf<input>& in ) {
+	string filext;
+	size_t dotPos, endPos;
+	
+	dotPos = fname.find_last_of( "." );
+	endPos = fname.length();
+	
+	filext = fname.substr( dotPos, (endPos - dotPos));
+	cerr << "\nfilext = " << filext << endl;
+	
+	if ( filext == ".gz" ) {
+		in.push(gzip_decompressor());
+	} else if ( filext == ".bz2" ) {
+		in.push(bzip2_decompressor());
+	} else if ( filext != ".vcf" ) {
+		cerr << "\nError!!  File extension '" << filext << "' not recognized!" << endl;
+		cerr << "\n\tAborting ... \n\n";
+		exit(-1);
+	}
+	
+	
+	return filext;
+}
 
 int main(int argc, char** argv)
 {
-    using namespace std;
-    using namespace boost::iostreams;
+	
+	
     
     if(argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <gzipped input file>" << std::endl;
     }
+	string fname = argv[1], filext;
     //Read from the first command line argument, assume it's gzipped
-    ifstream file(argv[1], ios_base::in | ios_base::binary);
+    ifstream file(fname, ios_base::in | ios_base::binary);
     
     filtering_streambuf<input> in;
-    in.push(gzip_decompressor());
-    in.push(file);
+	
+	
+	filext = getFileExt( fname, in );
+	in.push(file);
     
     // try to get strings out of it:
 //    istream stlin( &in );
@@ -34,14 +66,32 @@ int main(int argc, char** argv)
 //        stlin >> dums;
 //        cout << dums << endl;
 //    }
-    
-    
-    // output to uncompressed file for diff check:
-    // ofstream outfile( "footest.vcf", ios_base::out );
-    boost::iostreams::copy(in, std::cout);
-    
-    file.close();
-    // outfile.close();
+	
+	clock_t st, et;
+	ofstream outfile;
+	string myOpt = argv[2], dummyString;
+	istream myStringStream( &in );
+	if ( myOpt == "0" ) {
+		st = clock();
+		boost::iostreams::copy(in, std::cout);
+		et = clock();
+		// output to uncompressed file for diff check:
+		//outfile.open( "footest.vcf", ios_base::out );
+		//boost::iostreams::copy(in, outfile);
+		//outfile.close();
+	} else {
+    	// just see if we can loop over a stringstream
+		st = clock();
+		while ( myStringStream >> dummyString ) {
+			
+		}
+		et = clock();
+	}
+	
+	cerr << "\nClock time = " << et - st << endl;
+	
+	file.close();
+	
     
     return 0;
 }
