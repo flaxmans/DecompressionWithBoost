@@ -9,7 +9,11 @@ To compile the program, you will need:
 * g++
 * boost libraries
 
-## Usage
+## Compiling the program
+
+The program must be compiled from source 
+
+## Usage of wrapper script
 
 To try it out:
 
@@ -24,3 +28,21 @@ Here is an example using the wrapper script and files here:
 ```
 ./TryProgram.sh Medium_hmel2.5.30f4.vcf
 ```
+
+## Usage of program without wrapper script:
+
+For output of decompressed file to stdout:
+```
+./TestBoostZip filename.ext 0
+# note argument "0"
+# replace filename.ext with actual name, such as TinyTest.vcf.gz
+```
+
+For a test of clock time to parse stream into strings:
+```
+./TestBoostZip TinyTest.vcf.gz 1
+# note argument "1"
+```
+
+```
+
