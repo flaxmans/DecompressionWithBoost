@@ -46,13 +46,15 @@ int main(int argc, char** argv)
 	
 	
     
-    if(argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <gzipped input file>" << std::endl;
+    if(argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " <input file> <option 0 or other>" << std::endl;
+        exit(-1);
     }
 	string fname = argv[1], filext;
     //Read from the first command line argument, assume it's gzipped
     ifstream file(fname, ios_base::in | ios_base::binary);
     
+    // intialize object for streambuf to filter:
     filtering_streambuf<input> in;
 	
 	
@@ -81,10 +83,13 @@ int main(int argc, char** argv)
 		//outfile.close();
 	} else {
     	// just see if we can loop over a stringstream
-		st = clock();
+        int i = 0;
+        st = clock();
 		while ( myStringStream >> dummyString ) {
-			
+//            if ( i++ < 30 )
+//                cout << dummyString << "\t";
 		}
+        cout << endl;
 		et = clock();
 	}
 	

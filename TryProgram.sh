@@ -23,4 +23,8 @@ do
 	printf "\n\tdiff $i ${refFile}:"
 	diff $i ${refFile}
 done
+
+rm footest*
+
 echo " "
+
