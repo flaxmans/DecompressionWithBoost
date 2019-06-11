@@ -11,13 +11,13 @@ To compile the program, you will need:
 
 ## Compiling the program
 
-The program must be compiled from source 
+The program must be compiled from source.  Clone this repo, `cd` to it, and then simply type `make` in your terminal.
 
 ## Usage of wrapper script
 
 To try it out:
 
-* Use the wrapper script, which requires one argument, which is the base name.  
+* The wrapper script requires one argument, which is the 'base name' of the set of files it will test.  Two sets of example files are provided in this repo.  Both are based upon the data from the citation below.  
 
 * It also requires the presence of the file of that name, a gzipped version of that file, and a bzip2 compressed version of that file. (see list of files in repo for examples)
 
@@ -44,5 +44,11 @@ For a test of clock time to parse stream into strings:
 # note argument "1"
 ```
 
-```
+## Example data files provided here
+The example data provided here are subsets of a much larger 
+VCF (variant call format) file from the data archive of 
+Schilling et al. 2018 (_Genes_ 2018, 9(6), 274).  
+The original publication is freely available at: 
+[https://doi.org/10.3390/genes9060274](https://doi.org/10.3390/genes9060274),
+and the data archive is at: [http://bit.ly/2s6jeIf](http://bit.ly/2s6jeIf).
 
