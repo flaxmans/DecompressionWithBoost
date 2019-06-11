@@ -19,3 +19,8 @@ To try it out:
 
 * File extensions are mandatory!  Gzipped files must have names that end in .gz , and bzip2 compressed files must have names that end in .bz2 .
 
+Here is an example using the wrapper script and files here:
+
+```
+./TryProgram.sh Medium_hmel2.5.30f4.vcf
+```
